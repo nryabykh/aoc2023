@@ -3,7 +3,7 @@ package com.github.nryabykh
 object Day01 {
 
   def part1(data: String): Int = {
-    data.split("\n")
+    data.linesIterator
       .map { line =>
         val digits = line.filter(_.isDigit)
         s"${digits.head}${digits.last}".toInt
@@ -15,22 +15,22 @@ object Day01 {
       Seq("one", "two", "three", "four", "five", "six", "seven", "eight", "nine").zipWithIndex ++
       (1 to 9).map(_.toString).zipWithIndex
 
-    data.split("\n").map { line =>
+    data.linesIterator
+      .map { line =>
+        val firstIds = replacers.map {
+          case (word, digit) => (line.indexOf(word), digit + 1)
+        }
+          .filterNot { case (ix, _) => ix == -1 }
+          .sorted
 
-      val firstIds = replacers.map {
-        case (word, digit) => (line.indexOf(word), digit + 1)
-      }
-        .filterNot { case (ix, _) => ix == -1 }
-        .sorted
+        val lastIds = replacers.map {
+          case (word, digit) => (line.lastIndexOf(word), digit + 1)
+        }
+          .filterNot {case (ix, _) => ix == -1 }
+          .sorted
 
-      val lastIds = replacers.map {
-        case (word, digit) => (line.lastIndexOf(word), digit + 1)
-      }
-        .filterNot {case (ix, _) => ix == -1 }
-        .sorted
-
-      s"${firstIds.head._2}${lastIds.last._2}".toInt
-    }.sum
+        s"${firstIds.head._2}${lastIds.last._2}".toInt
+      }.sum
   }
 
   def main(args: Array[String]): Unit = {

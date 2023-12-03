@@ -13,9 +13,7 @@ object Day03 {
   case class Coord(x: Int, y: Int) {
     def allAdjacent: Seq[Coord] = {
       (x - 1 to x + 1).flatMap { i =>
-        (y - 1 to y + 1).map { j =>
-          Coord(i, j)
-        }
+        (y - 1 to y + 1).map(Coord(i, _))
       }.filterNot(c => (c.x == x) && (c.y == y))
     }
 
@@ -24,7 +22,7 @@ object Day03 {
     }
   }
 
-  case class PosNumber(coord: Coord, value: Int) {
+  case class CoordNumber(coord: Coord, value: Int) {
     def getAdjacent(width: Int, height: Int): Seq[Coord] = {
       (coord.x until coord.x + value.toString.length)
         .flatMap(i => Coord(i, coord.y).getCorrectAdjacent(width, height))
@@ -32,13 +30,13 @@ object Day03 {
     }
   }
 
-  def getNumberCoords(line: String, y: Int): Seq[(Coord, PosNumber)] = {
+  def getNumberCoords(line: String, y: Int): Seq[(Coord, CoordNumber)] = {
     val numberRegex = """\d+""".r
     numberRegex.findAllMatchIn(line)
       .map(m => (m.start, m.group(0)))
       .flatMap { case (start, number) =>
         (start until start + number.length)
-          .map(x => Coord(x, y) -> PosNumber(Coord(start, y), number.toInt))
+          .map(x => Coord(x, y) -> CoordNumber(Coord(start, y), number.toInt))
       }
       .toSeq
   }
@@ -55,7 +53,7 @@ object Day03 {
       getNumberCoords(line, y)
         .map { case (_, posNumber) => posNumber }
         .distinct
-        .filter(posNumber => posNumber.getAdjacent(input.width, input.height).exists(isSymbol))
+        .filter(_.getAdjacent(input.width, input.height).exists(isSymbol))
     }.map(_.value).sum
   }
 

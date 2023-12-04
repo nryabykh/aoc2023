@@ -1,4 +1,4 @@
-package com.github.nryabykh
+package com.github.nryabykh.aoc2023
 
 object Day02 {
 

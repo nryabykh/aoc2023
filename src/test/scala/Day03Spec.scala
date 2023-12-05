@@ -1,4 +1,4 @@
-package com.github.nryabykh
+package com.github.nryabykh.aoc2023
 
 import org.scalatest.funsuite.AnyFunSuite
 

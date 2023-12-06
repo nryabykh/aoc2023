@@ -1,4 +1,4 @@
-package com.github.nryabykh.aoc2023
+package aoc2023
 
 object Day01 {
 
@@ -13,7 +13,7 @@ object Day01 {
   def part2(data: String): Int = {
     val replacers =
       Seq("one", "two", "three", "four", "five", "six", "seven", "eight", "nine").zipWithIndex ++
-      (1 to 9).map(_.toString).zipWithIndex
+        (1 to 9).map(_.toString).zipWithIndex
 
     data.linesIterator
       .map { line =>
@@ -26,7 +26,7 @@ object Day01 {
         val lastIds = replacers.map {
           case (word, digit) => (line.lastIndexOf(word), digit + 1)
         }
-          .filterNot {case (ix, _) => ix == -1 }
+          .filterNot { case (ix, _) => ix == -1 }
           .sorted
 
         s"${firstIds.head._2}${lastIds.last._2}".toInt

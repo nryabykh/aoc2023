@@ -1,4 +1,4 @@
-package com.github.nryabykh.aoc2023
+package aoc2023
 
 object Day03 {
 
@@ -49,7 +49,7 @@ object Day03 {
       !(char.isDigit || (char == '.'))
     }
 
-    input.linesWithIndex.flatMap { case(line, y) =>
+    input.linesWithIndex.flatMap { case (line, y) =>
       getNumberCoords(line, y)
         .map { case (_, posNumber) => posNumber }
         .distinct

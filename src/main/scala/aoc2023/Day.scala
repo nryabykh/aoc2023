@@ -1,4 +1,4 @@
-package com.github.nryabykh.aoc2023
+package aoc2023
 
 trait Day {
 

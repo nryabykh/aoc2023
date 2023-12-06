@@ -1,6 +1,8 @@
 package aoc2023
 
-object Day04 {
+object Day04 extends Day {
+  override val dayNumber: String = "04"
+  override val title: String = "Scratchcards"
 
   def getWins(line: String): Set[Int] = {
     val Array(win, all) = line.split(": ").last
@@ -14,13 +16,13 @@ object Day04 {
     all.intersect(win)
   }
 
-  def part1(data: String): Int = {
+  override def part1(data: String): Int = {
     data.linesIterator.map(getWins)
       .collect { case s if s.nonEmpty => Math.pow(2, s.size - 1).toInt }
       .sum
   }
 
-  def part2(data: String): Int = {
+  override def part2(data: String): Int = {
     val lines = data.split("\n")
     val store = Map.empty[Int, Int]
 
@@ -33,11 +35,4 @@ object Day04 {
       }
     }.values.sum + lines.length
   }
-
-  def main(args: Array[String]): Unit = {
-    val data = io.Source.fromResource("day04.txt").mkString
-    println(part1(data))
-    println(part2(data))
-  }
-
 }

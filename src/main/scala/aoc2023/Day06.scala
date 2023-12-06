@@ -2,6 +2,7 @@ package aoc2023
 
 object Day06 extends Day{
   override val dayNumber: String = "06"
+  override val title: String = "Wait For It"
 
   case class Equation(b: Long, c: Long)
 
@@ -11,7 +12,7 @@ object Day06 extends Day{
 
   private def getRoots: Equation => Seq[Double] = eq => {
     val disc = Math.sqrt(1.0 * (eq.b * eq.b - 4 * eq.c))
-    Seq(0.5 * (eq.b - disc), 0.5 * (eq.b + disc))
+    Seq(-1, 1).map(x => 0.5 * (eq.b + x * disc))
   }
 
   private def countIntegersBetween: Seq[Double] => Long = bounds => {
@@ -19,20 +20,20 @@ object Day06 extends Day{
     Math.floor(upper).toInt - Math.floor(lower).toInt - (if (lower % 1 == 0) 1 else 0)
   }
 
-  override def part1(data: String): String = {
+  override def part1(data: String): Long = {
     val Array(times, distances) = data.split("\n")
       .map(extractNumbers)
 
     times.zip(distances).map {
       case (t, d) => (getRoots andThen countIntegersBetween)(Equation(t, d))
-    }.product.toString
+    }.product
   }
 
-  override def part2(data: String): String = {
+  override def part2(data: String): Long = {
     val Array(time, distance) = data.split("\n")
       .map(extractNumbers)
       .map(_.mkString("").toLong)
 
-    (getRoots andThen countIntegersBetween)(Equation(time, distance)).toString
+    (getRoots andThen countIntegersBetween)(Equation(time, distance))
   }
 }

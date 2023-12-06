@@ -2,13 +2,14 @@ package aoc2023
 
 object Day05 extends Day {
   override val dayNumber: String = "05"
+  override val title: String = "If You Give A Seed A Fertilizer"
 
   private def toRangeMap: String => RangeMap = s => {
     val Array(dest, source, length) = s.split(" ").map(_.toLong)
     RangeMap(Range(source, length), dest)
   }
 
-  override def part1(data: String): String = {
+  override def part1(data: String): Long = {
     val input = data.split("\n\n")
     val seeds = input.head
       .split(": ").last
@@ -23,10 +24,10 @@ object Day05 extends Day {
           .find(t => (t.startSource <= item) && (item < t.startSource + t.length))
           .map(t => t.startDest + (item - t.startSource))
           .getOrElse(item))
-    }.min.toString
+    }.min
   }
 
-  override def part2(data: String): String = {
+  override def part2(data: String): Long = {
     val input = data.split("\n\n")
     val seedsRange = input.head.split(": ").last
 
@@ -52,11 +53,10 @@ object Day05 extends Day {
               ++ Seq((Range(seed.start + seed.length, intersectedMax - (seed.start + seed.length)), 0L)))
               .filter { case(r, _) => r.length > 0 }
           } else Seq((seed, 0L))
-//          println(s"seed=$seed intersec=$intersections res=$result")
           result.map { case(r, _) => r }
         }
     }
-      .map(_.start).min.toString
+      .map(_.start).min
   }
 }
 

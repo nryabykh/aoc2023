@@ -4,14 +4,16 @@ trait Day {
 
   val dayNumber: String
 
-  def part1(data: String): String
+  val title: String = ""
 
-  def part2(data: String): String
+  def part1(data: String): AnyVal
+
+  def part2(data: String): AnyVal
 
   def main(args: Array[String]): Unit = {
     val data = io.Source.fromResource(s"day$dayNumber.txt").mkString
-    println(part1(data))
-    println(part2(data))
+    println(s"== Day $dayNumber: $title ==")
+    println(s"Part 1: ${part1(data).toString}")
+    println(s"Part 2: ${part2(data).toString}")
   }
-
 }

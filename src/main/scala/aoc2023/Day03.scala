@@ -1,6 +1,8 @@
 package aoc2023
 
-object Day03 {
+object Day03 extends Day {
+  override val dayNumber: String = "03"
+  override val title: String = "Gear Ratios"
 
   case class Input(data: String) {
     val lines: Array[String] = data.split("\n")
@@ -41,7 +43,7 @@ object Day03 {
       .toSeq
   }
 
-  def part1(data: String): Int = {
+  override def part1(data: String): Int = {
     val input = Input(data)
 
     def isSymbol(c: Coord): Boolean = {
@@ -57,7 +59,7 @@ object Day03 {
     }.map(_.value).sum
   }
 
-  def part2(data: String): Int = {
+  override def part2(data: String): Int = {
     val input = Input(data)
 
     val numbersMap = input.linesWithIndex
@@ -74,12 +76,4 @@ object Day03 {
       .collect { case s if s.size == 2 => s.toList.map(_.value).product }
       .sum
   }
-
-
-  def main(args: Array[String]): Unit = {
-    val data = io.Source.fromResource("day03.txt").mkString
-    println(part1(data))
-    println(part2(data))
-  }
-
 }

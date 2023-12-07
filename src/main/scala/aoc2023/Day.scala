@@ -6,6 +6,8 @@ trait Day {
 
   val title: String = ""
 
+  val link: String = s"https://adventofcode.com/"
+
   def part1(data: String): AnyVal
 
   def part2(data: String): AnyVal

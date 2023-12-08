@@ -2,9 +2,9 @@ package aoc2023
 
 import scala.annotation.tailrec
 
-case class Item(name: String, left: String, right: String)
+case class Node(name: String, left: String, right: String)
 
-case class Game(turns: String, map: Map[String, Item]) {
+case class Game(turns: String, map: Map[String, Node]) {
 
   @tailrec
   final def makeStep(currentPos: String, currentStep: Int, checkFn: String => Boolean): Int = {
@@ -31,14 +31,14 @@ object Day08 extends Day {
     val turns = input.head.trim
     val map = input.drop(1).flatMap { line =>
       """(\w+) = \((\w+), (\w+)\)""".r.findAllMatchIn(line).map(m =>
-        (m.group(1), Item(m.group(1), m.group(2), m.group(3))))
+        (m.group(1), Node(m.group(1), m.group(2), m.group(3))))
     }.toMap
 
     Game(turns, map)
   }
 
   override def part1(data: String): AnyVal = {
-    parse(data).makeStep("AAA", 0, s => s == "ZZZ")
+    parse(data).makeStep("AAA", 0, _ == "ZZZ")
   }
 
   override def part2(data: String): AnyVal = {
@@ -46,7 +46,7 @@ object Day08 extends Day {
 
     game.map.keySet
       .filter(_.endsWith("A"))
-      .map(s => game.makeStep(s, 0, x => x.endsWith("Z")).toLong)
+      .map(s => game.makeStep(s, 0, _.endsWith("Z")).toLong)
       .reduce(lcm)
   }
 }

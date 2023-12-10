@@ -14,7 +14,7 @@ class DaySpec extends AnyFunSuite {
     assert(worker.part1(sample) === 0)
   }
 
-  test("Part 2 should handle sample input correctle") {
+  test("Part 2 should handle sample input correctly") {
     assert(worker.part2(sample) === 0)
   }
 }

@@ -4,6 +4,8 @@ import scala.annotation.tailrec
 
 object Day10 extends Day {
   override val dayNumber: String = "10"
+  override val title: String = "Pipe Maze"
+  override val link: String = "https://adventofcode.com/2023/day/10"
 
   case class Point(x: Int, y: Int)
 
@@ -52,8 +54,8 @@ object Day10 extends Day {
   }
 
   @tailrec
-  def makeStep(queue: List[(Point, Point, Int, Set[Point])], game: Game): Set[Point] = {
-    val (currentPoint, prevPoint, stepCnt, visited) :: tail = queue
+  def makeStep(queue: List[(Point, Point, Set[Point])], game: Game): Set[Point] = {
+    val (currentPoint, prevPoint, visited) :: tail = queue
     val char = game.inputChars(currentPoint.y)(currentPoint.x)
 
     if ((char == 'S') && visited.nonEmpty) visited else {
@@ -64,7 +66,7 @@ object Day10 extends Day {
         .map { case(p, _) => p }
 
       val newQueue = next.foldLeft(tail) { case(acc, nextItem) =>
-        (nextItem, currentPoint, stepCnt + 1, visited + currentPoint) :: acc }
+        (nextItem, currentPoint, visited + currentPoint) :: acc }
       makeStep(newQueue, game)
     }
 
@@ -72,12 +74,12 @@ object Day10 extends Day {
 
   override def part1(data: String): AnyVal = {
     val game = Game(data)
-    makeStep(List((game.start, Point(-1, -1), 0, Set.empty[Point])), game).size / 2
+    makeStep(List((game.start, Point(-1, -1), Set.empty[Point])), game).size / 2
   }
 
   override def part2(data: String): AnyVal = {
     val game = Game(data)
-    val path = makeStep(List((game.start, Point(-1, -1), 0, Set.empty[Point])), game)
+    val path = makeStep(List((game.start, Point(-1, -1), Set.empty[Point])), game)
 
     game.inputChars.zipWithIndex.flatMap { case(line, j) =>
       line.indices

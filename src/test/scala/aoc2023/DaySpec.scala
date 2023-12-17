@@ -8,7 +8,7 @@ class DaySpec extends AnyFunSuite {
       |
       |""".stripMargin
 
-  private val worker = Day09
+  private val worker: Day = ???
 
   test("Part 1 should handle sample input correctly") {
     assert(worker.part1(sample) === 0)

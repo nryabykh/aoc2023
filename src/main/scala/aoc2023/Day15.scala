@@ -4,6 +4,9 @@ import scala.collection.mutable
 
 object Day15 extends Day {
   override val dayNumber: String = "15"
+  override val title: String = "Lens Library"
+  override val link: String = "https://adventofcode.com/2023/day/15"
+
 
   private def getHash(line: String): Int = {
     line.toCharArray.foldLeft(0L) {
